@@ -1,0 +1,46 @@
+name: design_airbnb
+description: Design of AirBnb App
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_svg: ^0.22.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - images/
+
+  fonts:
+    - family: Bold
+      fonts:
+        - asset: fonts/Montserrat-Bold.ttf
+    - family: Regular
+      fonts:
+        - asset: fonts/Montserrat-Regular.ttf
+    - family: Light
+      fonts:
+        - asset: fonts/Montserrat-Light.ttf
+    - family: Thin
+      fonts:
+        - asset: fonts/Montserrat-Thin.ttf
+    - family: ExtraBold
+      fonts:
+        - asset: fonts/Montserrat-ExtraBold.ttf
+    - family: SemiBold
+      fonts:
+        - asset: fonts/Montserrat-SemiBold.ttf
