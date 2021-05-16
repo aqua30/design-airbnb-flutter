@@ -1,3 +1,4 @@
+import 'package:design_airbnb/image_carousel_tile.dart';
 import 'package:design_airbnb/nearby_tile.dart';
 import 'package:design_airbnb/utils/constants.dart';
 import 'package:design_airbnb/utils/data_source.dart';
@@ -5,6 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ImageCarousel extends StatelessWidget {
+
+  final heading, subHeading;
+  final carouselDataList;
+
+  ImageCarousel({@required this.heading, this.subHeading, @required this.carouselDataList});
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -19,7 +26,7 @@ class ImageCarousel extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: leftMargin),
             child: Text(
-              'Live anywhere',
+              heading,
               style: TextStyle(
                 fontSize: 22,
                 color: COLOR_GRAY_1,
@@ -27,23 +34,33 @@ class ImageCarousel extends StatelessWidget {
               ),
             ),
           ),
+          Visibility(
+            visible: !(subHeading == null),
+            child: Padding(
+              padding: EdgeInsets.only(left: leftMargin, top: 8),
+              child: Text(
+                subHeading?? '',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontFamily: FONT_REGULAR,
+                ),
+              ),
+            ),
+          ),
           EmptySpace(height: 20.0),
           SizedBox(
             width: double.infinity,
-            height: screenSize.width * 0.4,
-            child: GridView.builder(
+            height: screenSize.width * 0.85,
+            child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.28,
-                    crossAxisSpacing: 2),
-                itemCount: nearByImages.length,
+                itemCount: carouselDataList.length,
                 padding: EdgeInsets.only(
                   left: leftMargin - 8,
                   right: leftMargin,
                 ),
                 itemBuilder: (context, index) {
-                  return NearByTile(nearByImages[index]);
+                  return ImageCarouselTile(carouselDataList[index]);
                 }),
           )
         ],

@@ -1,8 +1,10 @@
 import 'package:design_airbnb/image_carousel.dart';
 import 'package:design_airbnb/info_bar.dart';
 import 'package:design_airbnb/item_banner.dart';
+import 'package:design_airbnb/learn_more.dart';
 import 'package:design_airbnb/search_bar.dart';
 import 'package:design_airbnb/utils/constants.dart';
+import 'package:design_airbnb/utils/data_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,7 +66,18 @@ class HomeScreen extends StatelessWidget {
                   EmptySpace(height: 40.0),
                   GridItemCarousel(),
                   EmptySpace(height: 40.0),
-                  ImageCarousel(),
+                  ImageCarousel(
+                    heading:'Live anywhere',
+                    carouselDataList: LiveAnywhereCarouselData,
+                  ),
+                  EmptySpace(height: 20.0),
+                  LearnMoreTile(),
+                  EmptySpace(height: 40.0),
+                  ImageCarousel(
+                    heading: 'Discover Experiences',
+                    subHeading: 'Unique activities with local experts - in person or online.',
+                    carouselDataList: ExperienceCarouselData,
+                  ),
                 ],
               ),
               Positioned(

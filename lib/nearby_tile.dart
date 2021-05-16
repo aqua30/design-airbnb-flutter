@@ -1,4 +1,4 @@
-import 'package:design_airbnb/model/models.dart';
+import 'package:design_airbnb/model/nearby_carousel_model.dart';
 import 'package:design_airbnb/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

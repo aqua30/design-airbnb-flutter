@@ -6,6 +6,7 @@ const COLOR_WHITE = Colors.white;
 const COLOR_GRAY = Colors.grey;
 const COLOR_GRAY_1 = Color(0xff262626);
 const COLOR_GRAY_2 = Color(0xff999999);
+const COLOR_GRAY_3 = Color(0xff222222);
 
 /* fonts */
 const FONT_REGULAR = 'Regular';
