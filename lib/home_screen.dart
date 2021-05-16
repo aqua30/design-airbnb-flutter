@@ -12,7 +12,29 @@ import 'package:flutter/services.dart';
 import 'bottom_navigation_item.dart';
 import 'grid_carousel.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreen createState() => _HomeScreen();
+}
+
+class _HomeScreen extends State<HomeScreen> {
+  var _scrollController = ScrollController();
+  var _offsetTop = 50;
+
+  _scrollListener() {
+    print('offset: ${_scrollController.offset}');
+    print('position: ${_scrollController.position.pixels}');
+    if(_scrollController.offset <=)
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      _scrollListener();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -57,6 +79,9 @@ class HomeScreen extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               ListView(
+                physics: BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
+                controller: _scrollController,
                 children: [
                   InfoBar(),
                   BannerItem(
@@ -67,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                   GridItemCarousel(),
                   EmptySpace(height: 40.0),
                   ImageCarousel(
-                    heading:'Live anywhere',
+                    heading: 'Live anywhere',
                     carouselDataList: LiveAnywhereCarouselData,
                   ),
                   EmptySpace(height: 20.0),
@@ -75,14 +100,18 @@ class HomeScreen extends StatelessWidget {
                   EmptySpace(height: 40.0),
                   ImageCarousel(
                     heading: 'Discover Experiences',
-                    subHeading: 'Unique activities with local experts - in person or online.',
+                    subHeading:
+                        'Unique activities with local experts - in person or online.',
                     carouselDataList: ExperienceCarouselData,
                   ),
                 ],
               ),
               Positioned(
                 top: 50,
-                child: SearchBar(),
+                child: Transform.translate(
+                  offset: Offset(0, _offsetTop),
+                  child: SearchBar(),
+                ),
               )
             ],
           )),
