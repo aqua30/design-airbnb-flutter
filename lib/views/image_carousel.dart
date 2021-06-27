@@ -1,7 +1,5 @@
-import 'package:design_airbnb/image_carousel_tile.dart';
-import 'package:design_airbnb/nearby_tile.dart';
+import 'package:design_airbnb/views/image_carousel_tile.dart';
 import 'package:design_airbnb/utils/constants.dart';
-import 'package:design_airbnb/utils/data_source.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

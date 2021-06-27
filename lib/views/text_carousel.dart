@@ -1,25 +1,32 @@
-import 'package:design_airbnb/nearby_tile.dart';
+import 'package:design_airbnb/model/text_carousel_model.dart';
 import 'package:design_airbnb/utils/constants.dart';
-import 'package:design_airbnb/utils/data_source.dart';
+import 'package:design_airbnb/views/text_grid_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class GridItemCarousel extends StatelessWidget {
+class TextGridCarousel extends StatelessWidget {
+
+  final heading;
+  final carouselData;
+
+  TextGridCarousel(this.heading, this.carouselData);
+
   @override
   Widget build(BuildContext context) {
+
     final screenSize = MediaQuery.of(context).size;
     final leftMargin = screenSize.width - screenSize.width * 0.94;
 
     return Container(
       width: screenSize.width,
-      color: Colors.white,
+      color: Colors.grey.shade50,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: leftMargin),
+            padding: EdgeInsets.only(left: leftMargin, top: 20),
             child: Text(
-              'Explore nearby',
+              heading,
               style: TextStyle(
                 fontSize: 22,
                 color: COLOR_GRAY_1,
@@ -27,27 +34,29 @@ class GridItemCarousel extends StatelessWidget {
               ),
             ),
           ),
-          EmptySpace(height: 20.0),
           SizedBox(
             width: double.infinity,
-            height: screenSize.width * 0.4,
+            height: screenSize.width * 0.8,
             child: GridView.builder(
                 scrollDirection: Axis.horizontal,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 4,
                     childAspectRatio: 0.28,
                     crossAxisSpacing: 2),
-                itemCount: nearByImages.length,
+                itemCount: carouselData.length,
                 padding: EdgeInsets.only(
                   left: leftMargin - 8,
                   right: leftMargin,
+                  top: 16,
+                  bottom: 16,
                 ),
                 itemBuilder: (context, index) {
-                  return NearByTile(nearByImages[index]);
+                  return TextInfoTile(carouselData[index]);
                 }),
           )
         ],
       ),
     );
   }
+
 }

@@ -1,16 +1,17 @@
-import 'package:design_airbnb/image_carousel.dart';
-import 'package:design_airbnb/info_bar.dart';
-import 'package:design_airbnb/item_banner.dart';
-import 'package:design_airbnb/learn_more.dart';
-import 'package:design_airbnb/search_bar.dart';
+import 'package:design_airbnb/views/bottom_bar.dart';
+import 'package:design_airbnb/views/image_carousel.dart';
+import 'package:design_airbnb/views/info_bar.dart';
+import 'package:design_airbnb/views/item_banner.dart';
+import 'package:design_airbnb/views/learn_more.dart';
+import 'package:design_airbnb/views/search_bar.dart';
 import 'package:design_airbnb/utils/constants.dart';
 import 'package:design_airbnb/utils/data_source.dart';
+import 'package:design_airbnb/views/text_carousel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'bottom_navigation_item.dart';
-import 'grid_carousel.dart';
+import '../views/grid_carousel.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,12 +20,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreen extends State<HomeScreen> {
   var _scrollController = ScrollController();
-  var _offsetTop = 50;
+  var _offsetTop = 35.0;
+  var _shrinkOffset = 0.0;
+  var isUpScroll = true;
 
+  /* callback which receives the offset values */
   _scrollListener() {
     print('offset: ${_scrollController.offset}');
-    print('position: ${_scrollController.position.pixels}');
-    if(_scrollController.offset <=)
+    setState(() {
+      isUpScroll = _shrinkOffset < _scrollController.offset;
+      print("$isUpScroll");
+      if (isUpScroll) {
+        // scroll up
+        if (_scrollController.offset >= _offsetTop) {
+          _shrinkOffset = _offsetTop;
+        } else
+          _shrinkOffset = _scrollController.offset;
+      } else if (_offsetTop >= _scrollController.offset) {
+        _shrinkOffset = _scrollController.offset;
+      }
+    });
   }
 
   @override
@@ -44,42 +59,12 @@ class _HomeScreen extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
           backgroundColor: COLOR_WHITE,
-          bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: COLOR_WHITE,
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: BottomNavigationImage('images/search.png', Colors.red),
-                label: 'Explore',
-              ),
-              BottomNavigationBarItem(
-                icon: BottomNavigationImage('images/heart.png', Colors.grey),
-                label: 'Whishlists',
-              ),
-              BottomNavigationBarItem(
-                icon: BottomNavigationImage('images/airbnb.png', Colors.grey),
-                label: 'Trips',
-              ),
-              BottomNavigationBarItem(
-                icon: BottomNavigationImage('images/chat.png', Colors.grey),
-                label: 'Inbox',
-              ),
-              BottomNavigationBarItem(
-                icon: BottomNavigationImage('images/user.png', Colors.grey),
-                label: 'Profile',
-              ),
-            ],
-            selectedFontSize: 12,
-            unselectedFontSize: 12,
-            selectedItemColor: Colors.red,
-            unselectedItemColor: Colors.grey,
-            onTap: (value) {},
-          ),
+          bottomNavigationBar: BottomBar(),
           body: Stack(
             alignment: Alignment.center,
             children: [
               ListView(
-                physics: BouncingScrollPhysics(
+                physics: ClampingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 controller: _scrollController,
                 children: [
@@ -93,7 +78,7 @@ class _HomeScreen extends State<HomeScreen> {
                   EmptySpace(height: 40.0),
                   ImageCarousel(
                     heading: 'Live anywhere',
-                    carouselDataList: LiveAnywhereCarouselData,
+                    carouselDataList: liveAnywhereCarouselData,
                   ),
                   EmptySpace(height: 20.0),
                   LearnMoreTile(),
@@ -102,17 +87,31 @@ class _HomeScreen extends State<HomeScreen> {
                     heading: 'Discover Experiences',
                     subHeading:
                         'Unique activities with local experts - in person or online.',
-                    carouselDataList: ExperienceCarouselData,
+                    carouselDataList: experienceCarouselData,
                   ),
+                  TextGridCarousel('Stay informed', textCarouselData),
                 ],
+              ),
+              Positioned(
+                top: 35,
+                child: Transform.translate(
+                  child: Opacity(
+                    child: Container(
+                      height: 70,
+                      color: Color.fromRGBO(0, 0, 0, 0),
+                    ),
+                    opacity: 1- ((_offsetTop - _shrinkOffset)/_offsetTop),
+                  ),
+                  offset: Offset(0, -_shrinkOffset),
+                ),
               ),
               Positioned(
                 top: 50,
                 child: Transform.translate(
-                  offset: Offset(0, _offsetTop),
                   child: SearchBar(),
+                  offset: Offset(0, -_shrinkOffset),
                 ),
-              )
+              ),
             ],
           )),
     );
